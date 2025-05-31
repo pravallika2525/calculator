@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            padding-top: 250px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            /* Using a placeholder image for demonstration. Replace with your preferred background. */
+            background-image: url("https://images.shiksha.com/mediadata/images/articles/1696936406phpZk3vYs.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding-bottom: 200px;
+            backdrop-filter: blur(5px); /* Adds a subtle blur to the background image */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to the top of the padding-top */
+            min-height: 100vh; /* Ensures body takes full viewport height */
+        }
+
+        .calculator {
+            width: 320px; /* Slightly adjusted width for better aesthetics */
+            margin: 10px auto;
+            margin-top: -50px; /* Adjusts the position based on padding-top */
+            padding: 40px 30px 50px 30px; /* Adjusted padding for internal spacing */
+            background-color: rgb(29, 29, 73); /* Dark blue background for calculator */
+            border: 1px solid #ddd;
+            border-radius: 40px; /* Highly rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+            animation: fadeInScale 1s ease-out forwards; /* Renamed and adjusted animation */
+            transform: scale(0.8); /* Initial scale for animation */
+            opacity: 0; /* Initial opacity for animation */
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1.0);
+                opacity: 1;
+            }
+        }
+
+        #display {
+            width: calc(100% - 20px); /* Adjust width considering padding */
+            height: 60px; /* Taller display for readability */
+            margin-bottom: 25px;
+            padding: 10px;
+            font-size: 2.5em; /* Larger font size for display */
+            text-align: right;
+            border: none; /* No border for a cleaner look */
+            border-radius: 15px; /* Rounded display corners */
+            background-color: whitesmoke;
+            color: #333;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+            overflow: hidden; /* Hide overflow for long numbers */
+            white-space: nowrap; /* Prevent wrapping */
+            text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 18px; /* Increased gap between buttons */
+        }
+
+        button {
+            height: 65px; /* Larger buttons */
+            font-size: 1.6em; /* Larger font size for buttons */
+            border: none; /* No button border */
+            border-radius: 15px; /* Rounded button corners */
+            background-color: #e0e0e0; /* Light grey for number buttons */
+            cursor: pointer;
+            transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
+            color: #333; /* Dark text for numbers */
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Button shadow */
+        }
+
+        button:hover {
+            background-color: #d0d0d0; /* Slightly darker on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .operator {
+            background-color: #fc6209; /* Vibrant orange for operators */
+            color: #fff; /* White text for operators */
+            font-weight: bold;
+        }
+
+        .operator:hover {
+            background-color: #e05500; /* Darker orange on hover */
+            transform: translateY(-2px);
+        }
+
+        /* Specific styles for AC and C buttons */
+        #clear, #backspace {
+            background-color: #ff4d4d; /* Red for clear buttons */
+        }
+
+        #clear:hover, #backspace:hover {
+            background-color: #cc0000;
+        }
+
+        #equals {
+            background-color: #4CAF50; /* Green for equals button */
+        }
+
+        #equals:hover {
+            background-color: #45a049;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 450px) {
+            .calculator {
+                width: 90%;
+                margin: 20px auto;
+                padding: 30px 20px 40px 20px;
+                margin-top: 100px; /* Adjust margin for smaller screens */
+            }
+            #display {
+                font-size: 2em;
+            }
+            button {
+                height: 55px;
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button class="operator" id="clear">AC</button>
+            <button class="operator" id="backspace">C</button>
+            <button class="operator" id="percent">%</button>
+            <button class="operator" id="divide">/</button>
+
+            <button class="number" id="seven">7</button>
+            <button class="number" id="eight">8</button>
+            <button class="number" id="nine">9</button>
+            <button class="operator" id="multiply">*</button>
+
+            <button class="number" id="four">4</button>
+            <button class="number" id="five">5</button>
+            <button class="number" id="six">6</button>
+            <button class="operator" id="subtract">-</button>
+
+            <button class="number" id="one">1</button>
+            <button class="number" id="two">2</button>
+            <button class="number" id="three">3</button>
+            <button class="operator" id="add">+</button>
+
+            <button class="number" id="zero-double">00</button>
+            <button class="number" id="zero-single">0</button>
+            <button class="number" id="decimal">.</button>
+            <button class="operator" id="equals">=</button>
+        </div>
+    </div>
+<script>
+    let display = document.getElementById('display');
+let currentNumber = '';
+
+function calculate() {
+    try {
+        display.value = eval(display.value);
+    } catch (e) {
+        display.value = 'Error';
+    }
+}
+
+function clearDisplay() {
+    display.value = '';
+    currentNumber = '';
+}
+
+for (let i = 0; i < document.getElementsByClassName('number').length; i++) {
+    document.getElementsByClassName('number')[i].addEventListener('click', function() {
+        display.value += this.textContent;
+    });
+}
+
+for (let i = 0; i < document.getElementsByClassName('operator').length; i++) {
+    document.getElementsByClassName('operator')[i].addEventListener('click', function() {
+        if (this.id === 'clear') {
+            clearDisplay();
+        } else if (this.id === 'equals') {
+            calculate();
+        } else {
+            display.value += this.textContent;
+        }
+    });
+}
+</script>
+   </body>
+   </html>
