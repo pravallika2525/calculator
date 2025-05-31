@@ -1,0 +1,93 @@
+body {
+    padding-top: 250px;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    background-image: url("https://images.shiksha.com/mediadata/images/articles/1696936406phpZk3vYs.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 200px;
+    backdrop-filter: blur(5px);
+}
+
+.calculator {
+    width: 300px;
+    margin: 10px auto;
+    margin-top: -50px;
+    padding-top: 60px;
+    padding-bottom: 70px;
+    padding-right: 30px;
+    padding-left: 40px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgb(29, 29, 73);
+   
+    animation: example 2s ease-in;
+
+}
+@keyframes example{
+    0%{
+
+        transform: scale(0.5) ;
+    }
+    100%{
+        transform: scale(1.0);
+    }
+}
+
+
+
+
+#display {
+    width: 90%;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: right;
+    border:solid 2px black;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    box-shadow: 0 0 10px rgba(179, 177, 177, 0.1);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+    
+}
+
+button {
+    height: 50px;
+    font-size: 18px;
+    border: solid 1px black;
+    margin-top: 15px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    cursor: pointer;
+
+}
+
+button:hover {
+    background-color: #f0f0f0;
+}
+
+.operator {
+    background-color: #fc6209;
+    color: #fff;
+}
+
+.operator:hover {
+    background-color: #cc6d14;
+}
+
+@media (max-width: 400px) {
+    .calculator {
+        width: 90%;
+        margin: 20px auto;
+    }
+   
+}
